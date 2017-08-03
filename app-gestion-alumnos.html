@@ -1,0 +1,49 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<link rel="import" href="./listado-alumnos.html">
+<link rel="import" href="./alumno-form.html">
+<dom-module id="app-gestion-alumnos">
+    <template>
+        <style include="app-gestion-alumnos-shared-style">
+        .formulario {
+            /*display: none;*/
+        }
+        </style>
+        <div class="app-gestion-container">
+            <listado-alumnos alumnos="[[alumnos]]"></listado-alumnos>
+            <alumno-form id="formulario" class="formulario" alumno={{alumno}}></alumno-form>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'app-gestion-alumnos',
+        properties: {
+            alumnos: {
+                type: Array,
+                value: function() {
+                    return [
+                        { nombre: 'Victor', apellido: 'Godinez', notas: [{value: 10}, {value: 7}, {value: 8}, {value: 4}, {value: 6}] },
+                        { nombre: 'Ariel', apellido: 'Reyna', notas: [{value: 6}, {value: 7}, {value: 8}, {value: 4}, {value: 6}] },
+                        { nombre: 'Allan', apellido: 'Sanchez', notas: [{value: 6}, {value: 7}, {value: 8}, {value: 4}, {value: 6}] }
+                    ]
+                }
+            },
+            alumno: {
+                type: Object,
+                value: null
+            }
+        },
+        listeners: {
+            'new-alumno': '_setAlumno',
+            'save-alumno': '_pushAlumno'
+        },
+        _setAlumno: function(e) {
+        	console.log('_setAlumno');
+            this.alumno = e.detail;
+        },
+        _pushAlumno: function(e){
+        	this.push('alumnos', e.detail.alumno);
+        	this.alumno = null;
+        }
+    });
+    </script>
+</dom-module>

@@ -1,0 +1,38 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<link rel="import" href="./alumno-form-notas.html">
+<dom-module id="alumno-form-notas">
+    <template>
+        <style include="alumno-form-notas-shared-style">
+            .alumno-form-notas-container{
+                background-color: red;
+                padding: 8px;
+            }
+            .alumno-form-notas-container input{
+                display: inherit;
+            }
+        </style>
+        <div class="alumno-form-notas-container">
+            <button id="nueva" on-tap="_addNota">Nueva Nota</button>
+            <template is="dom-repeat" items={{notas}} as="nota">
+                <input type="number" value={{nota.value::input}}>
+            </template>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'alumno-form-notas',
+        properties: {
+            notas:{
+                type: Array,
+                value: function(){
+                    return [];
+                }
+            }
+        },
+        _addNota: function(){
+            this.push('notas', {});
+            this.fire('put-notas', this.notas)
+        }
+    });
+    </script>
+</dom-module>

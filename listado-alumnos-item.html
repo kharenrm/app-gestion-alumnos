@@ -1,0 +1,93 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<dom-module id="listado-alumnos-item">
+    <template>
+        <style include="listado-alumnos-item-shared-style">
+         :host {
+            display: block;
+        }
+
+        .listado-alumnos-item-container {
+            background-color: #dddddd;
+            padding: 8px;
+        }
+
+        .imagen_perfil {
+            width: 200px;
+            height: 100px;
+            border-radius: 50px;
+        }
+
+        .aprobado {
+            color: green;
+        }
+
+        .reprobado {
+            color: red;
+        }
+        </style>
+        <div class="listado-alumnos-item-container">
+            <img class="imagen_perfil" src$="[[imagenAlumno]]" />
+            <label class="nombre">[[nombreCompleto]] <span class$="[[_esAprobado(notaMedia)]]">([[notaMedia]])</span></label>
+            <button id="editar">Editar</button>
+            <button id="cancelar">Eliminar</button>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'listado-alumnos-item',
+        properties: {
+            nombre: {
+                type: String,
+                value: ''
+            },
+            apellido: {
+                type: String,
+                value: ''
+            },
+            nombreCompleto: {
+                type: String,
+                computed: '_nombre(nombre, apellido)'
+            },
+            imagenAlumno: {
+                type: String,
+                value: 'https://lorempixel.com/400/200/cats/',
+                readOnly: true
+            },
+            notas: {
+                type: Array,
+                value: function() {
+                    return [];
+                }
+            },
+            notaMedia: {
+                type: Number,
+                computed: '_calculaNotaMedia(notas)'
+            }
+        },
+        listeners: {
+            'editar.tap': '_fireEdit',
+            'cancelar.tap': '_fireDelete'
+        },
+        _nombre: function(nombre, apellido) {
+            return nombre + ' ' + apellido;
+        },
+        _esAprobado: function(media) {
+            return media <= 5 ? 'reprobado' : 'aprobado';
+        },
+        _fireEdit: function() {
+            this.fire('tap-edit-event');
+        },
+        _fireDelete: function() {
+            this.fire('tap-delete-event');
+        },
+        _calculaNotaMedia: function(notas) {
+            console.log(notas);
+            var media = 0;
+            for (var i = 0; i < notas.length; i++) {
+                media = media + (notas[i].value*1);
+            }
+            return media/notas.length;
+        }
+    });
+    </script>
+</dom-module>

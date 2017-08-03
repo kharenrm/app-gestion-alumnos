@@ -1,0 +1,32 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<link rel="import" href="listado-alumnos-item.html">
+<dom-module id="listado-alumnos">
+    <template>
+        <style include="listado-alumnos-shared-style"></style>
+        <div class="listado-alumnos-container">
+        <button id="nuevo">Nuevo</button>
+        <template is="dom-repeat" items="{{alumnos}}" as="alumno">
+            <listado-alumnos-item nombre="[[alumno.nombre]]" apellido="[[alumno.apellido]]" notas="[[alumno.notas]]"></listado-alumnos-item>
+        </template>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'listado-alumnos',
+        properties: {
+            alumnos:{
+                type: Array,
+                value: function(){
+                    return [];
+                }
+            }
+        },
+        listeners:{
+            'nuevo.tap': '_newAlumno'
+        },
+        _newAlumno: function(){
+            this.fire('new-alumno',{});
+        }
+    });
+    </script>
+</dom-module>

@@ -1,0 +1,48 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<link rel="import" href="./alumno-form-notas.html">
+<dom-module id="alumno-form">
+    <template>
+        <style include="alumno-form-shared-style">
+            .alumno-form-container{
+                background-color: yellow;
+                padding: 8px; 
+            }
+        </style>
+        <div class="alumno-form-container">
+            <template is="dom-if" if="[[alumno]]">
+                <form>
+                    Nombre:
+                    <input type="text" value="{{alumno.nombre::input}}"> 
+                    Apellido:
+                    <input type="text" value="{{alumno.apellido::input}}">
+                    <alumno-form-notas notas={{notas}}></alumno-form-notas>
+                    <button id="guardar" on-tap="_saveAlumno">Guardar</button>
+                </form>
+            </template>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'alumno-form',
+        properties: {
+            alumno: {
+                type: Object,
+                value: null
+            }
+        },
+        listeners:{
+            'put-notas': '_setNotas'
+        },
+        _saveAlumno: function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            this.fire('save-alumno', {alumno: this.alumno});
+        },
+        _setNotas: function(e){
+            console.log(e.detail);
+            console.log('_setNotas');
+            this.alumno.notas = e.detail;
+        }
+    });
+    </script>
+</dom-module>
