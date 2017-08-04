@@ -84,9 +84,9 @@
             console.log(notas);
             var media = 0;
             for (var i = 0; i < notas.length; i++) {
-                media = media + (notas[i].value*1);
+                media += notas[i].value * 1;
             }
-            return media/notas.length;
+            return media / notas.length;
         }
     });
     </script>
