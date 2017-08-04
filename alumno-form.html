@@ -28,20 +28,20 @@
             alumno: {
                 type: Object,
                 value: null
+            },
+            notas:{
+                type: Array,
+                value: function(){
+                    return [];
+                }
             }
-        },
-        listeners:{
-            'put-notas': '_setNotas'
         },
         _saveAlumno: function(e){
             e.stopPropagation();
             e.preventDefault();
+            this.alumno.notas = this.notas;
             this.fire('save-alumno', {alumno: this.alumno});
-        },
-        _setNotas: function(e){
-            console.log(e.detail);
-            console.log('_setNotas');
-            this.alumno.notas = e.detail;
+            this.notas = [];
         }
     });
     </script>
